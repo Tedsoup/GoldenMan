@@ -10,7 +10,16 @@
       "profile": "48afb27c-e834-4ccd-80a0-1b896aafb395",
       "registered": "2026-11-12",
       "status": "verified"
+    },
+    "979c963e117949a2a7d0801fe246cd3b": {
+      "name": "John_Farm",
+      "profile": "19929425-f1e2-48da-b3e3-be550eabaacc",
+      "reasons": [
+        "Hypixel API error 403"
+      ],
+      "registered": "2026-11-12",
+      "status": "pending"
     }
   },
-  "updated": "2026-11-12T20:58:35+00:00"
+  "updated": "2026-11-12T23:37:20+00:00"
 }
