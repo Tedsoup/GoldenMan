@@ -176,7 +176,7 @@ async function load() {
     const res = await fetch("players.json?t=" + Date.now());
     const data = await res.json();
     const order = { verified: 0, pending: 1, failed: 2 };
-    players = Object.entries(data.players || {}).map(([uuid, p]) => ({ uuid, ...p, status: p.status || "pending" }))
+    players = Object.entries(data.players || {}).map(([uuid, p]) => ({ uuid, ...p, status: p.status || "pending" })).filter(p => p.status !== "ended")
       .sort((a, b) => (b.uuid === CREATOR) - (a.uuid === CREATOR) || order[a.status] - order[b.status]
         || (a.name || "").localeCompare(b.name || ""));
     document.getElementById("n-all").textContent = players.length;
