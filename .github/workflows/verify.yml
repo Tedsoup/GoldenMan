@@ -1,0 +1,41 @@
+name: Golden Man verification
+
+on:
+  issues:
+    types: [opened]
+  schedule:
+    - cron: "17 * * * *"   # re-check everyone hourly
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: golden-man-verify
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.event_name != 'issues' || contains(github.event.issue.body, '### Profile ID')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run checks
+        run: python verification/verify.py
+        env:
+          HYPIXEL_API_KEY: ${{ secrets.HYPIXEL_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+      - name: Publish players.json
+        run: |
+          if ! git diff --quiet players.json; then
+            git config user.name "golden-man-bot"
+            git config user.email "golden-man-bot@users.noreply.github.com"
+            git add players.json
+            git commit -m "Update Golden Man list"
+            git push
+          fi
