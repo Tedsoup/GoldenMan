@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Man · Verified Players</title>
+<link rel="icon" href="icon.png">
+<style>
+  :root {
+    --bg: #0f0d0a; --panel: #1a1712; --panel2: #221e17; --line: #3a3226;
+    --text: #f2ead9; --muted: #a59a85; --gold: #ffc400; --gold2: #ffe680;
+    --green: #5ee27a; --yellow: #ffe14d; --red: #ff5f5f; --pink: #ff77ff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: radial-gradient(1200px 500px at 50% -200px, #3a2a00 0%, var(--bg) 70%); color: var(--text);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; min-height: 100vh; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 40px 20px 60px; }
+  header { display: flex; align-items: center; gap: 16px; }
+  header img { width: 56px; height: 56px; image-rendering: pixelated; }
+  h1 { margin: 0; font-size: 34px; letter-spacing: .5px;
+       background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold)); background-size: 200% 100%;
+       -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 4s linear infinite; }
+  @keyframes shine { to { background-position: -200% 0; } }
+  .tag { color: var(--muted); margin: 2px 0 0; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0 18px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .stat b { display: block; font-size: 26px; }
+  .stat span { color: var(--muted); font-size: 13px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  input[type=search] { flex: 1; min-width: 200px; background: var(--panel); border: 1px solid var(--line); color: var(--text);
+                       border-radius: 10px; padding: 10px 12px; font: inherit; }
+  input[type=search]:focus { outline: 2px solid var(--gold); outline-offset: -1px; }
+  .chip { background: var(--panel); border: 1px solid var(--line); color: var(--muted); border-radius: 999px;
+          padding: 7px 14px; cursor: pointer; font: inherit; }
+  .chip.on { color: #1a1300; background: var(--gold); border-color: var(--gold); font-weight: 600; }
+  .list { display: grid; gap: 10px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+          display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: start; }
+  .card img { width: 40px; height: 40px; border-radius: 6px; image-rendering: pixelated; background: var(--panel2); }
+  .name { font-weight: 650; font-size: 16px; }
+  .name.creator { color: var(--pink); }
+  .name.failed { text-decoration: line-through; color: var(--muted); }
+  .meta { color: var(--muted); font-size: 13px; }
+  .reasons { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
+  .reasons li { margin: 2px 0; }
+  .badge { border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700; letter-spacing: .4px; white-space: nowrap; }
+  .verified { background: rgba(94,226,122,.12); color: var(--green); border: 1px solid rgba(94,226,122,.35); }
+  .pending  { background: rgba(255,225,77,.10); color: var(--yellow); border: 1px solid rgba(255,225,77,.35); }
+  .failed-b { background: rgba(255,95,95,.10); color: var(--red); border: 1px solid rgba(255,95,95,.35); }
+  .dev { background: rgba(255,119,255,.10); color: var(--pink); border: 1px solid rgba(255,119,255,.35); margin-right: 6px; }
+  .empty { color: var(--muted); text-align: center; padding: 40px 0; }
+  section.info { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .box h2 { margin: 0 0 8px; font-size: 16px; color: var(--gold); }
+  .box ul, .box ol { margin: 0; padding-left: 18px; }
+  .box li { margin: 3px 0; }
+  kbd { background: var(--panel2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 0 6px; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 28px; text-align: center; }
+  @media (max-width: 640px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    section.info { grid-template-columns: 1fr; }
+    .card { grid-template-columns: 36px 1fr; }
+    .card .badges { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon.png" alt="">
+    <div>
+      <h1>Golden Man</h1>
+      <p class="tag">Ironman, but you can insta-sell to the Bazaar. Every run here is checked through the Hypixel API.</p>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b id="n-all">–</b><span>Players</span></div>
+    <div class="stat"><b id="n-verified" style="color:var(--green)">–</b><span>Verified</span></div>
+    <div class="stat"><b id="n-pending" style="color:var(--yellow)">–</b><span>Pending</span></div>
+    <div class="stat"><b id="n-failed" style="color:var(--red)">–</b><span>Failed</span></div>
+  </div>
+
+  <div class="controls">
+    <input type="search" id="q" placeholder="Search players…" aria-label="Search players">
+    <button class="chip on" data-f="all">All</button>
+    <button class="chip" data-f="verified">Verified</button>
+    <button class="chip" data-f="pending">Pending</button>
+    <button class="chip" data-f="failed">Failed</button>
+  </div>
+
+  <div class="list" id="list"><div class="empty">Loading…</div></div>
+
+  <section class="info">
+    <div class="box">
+      <h2>The rules</h2>
+      <ul>
+        <li>Bazaar: insta-sell only (no buy orders or sell offers)</li>
+        <li>Bazaar buys: Booster Cookies only</li>
+        <li>Auction House: completely off-limits</li>
+        <li>Trading: co-op members only</li>
+        <li>NPC shops and the Dark Auction are fine</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h2>How to join</h2>
+      <ol>
+        <li>Install the Golden Man mod (Fabric, Minecraft 26.2)</li>
+        <li>Make a fresh SkyBlock profile (below level 7)</li>
+        <li>Turn on every API setting: SkyBlock Menu → Settings → API Settings</li>
+        <li>Press <kbd>G</kbd> → <b>Start Golden Man</b>. You're registered automatically.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h2>What gets checked</h2>
+      <ul>
+        <li>All API settings are on</li>
+        <li>The run started on a profile below SkyBlock level 7</li>
+        <li>The Auction House was never used</li>
+        <li>Every co-op member is registered too</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h2>Statuses</h2>
+      <ul>
+        <li><b style="color:var(--green)">Verified</b>: everything checks out</li>
+        <li><b style="color:var(--yellow)">Pending</b>: something needs fixing (see the reasons)</li>
+        <li><b style="color:var(--red)">Failed</b>: a rule was broken. This is permanent.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer id="updated">Re-checked every hour.</footer>
+</div>
+
+<script>
+const CREATOR = "1452663962ef444181bcd4c37d9200cc";
+let players = [], filter = "all";
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function render() {
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const shown = players
+    .filter(p => filter === "all" || p.status === filter)
+    .filter(p => !q || (p.name || "").toLowerCase().includes(q));
+  const list = document.getElementById("list");
+  if (!shown.length) {
+    list.innerHTML = `<div class="empty">${players.length ? "No players match." : "No one has registered yet. Be the first!"}</div>`;
+    return;
+  }
+  list.innerHTML = shown.map(p => {
+    const creator = p.uuid === CREATOR;
+    const badge = p.status === "verified" ? `<span class="badge verified">VERIFIED</span>`
+                : p.status === "failed" ? `<span class="badge failed-b">FAILED</span>`
+                : `<span class="badge pending">PENDING</span>`;
+    const why = p.dev ? [] : (p.reasons || []);
+    const dates = [p.registered && `Registered ${esc(p.registered)}`, p.verified_since && `Verified since ${esc(p.verified_since)}`]
+      .filter(Boolean).join(" · ");
+    return `<div class="card">
+      <img src="https://mc-heads.net/avatar/${esc(p.uuid)}/40" alt="" loading="lazy" onerror="this.onerror=null;this.src='icon.png'">
+      <div>
+        <div class="name ${creator ? "creator" : ""} ${p.status === "failed" ? "failed" : ""}">${esc(p.name)}</div>
+        <div class="meta">${dates}</div>
+        ${why.length ? `<ul class="reasons">${why.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
+      </div>
+      <div class="badges">${p.dev ? `<span class="badge dev">CREATOR</span>` : ""}${badge}</div>
+    </div>`;
+  }).join("");
+}
+
+function count(s) { return players.filter(p => p.status === s).length; }
+
+async function load() {
+  try {
+    const res = await fetch("players.json?t=" + Date.now());
+    const data = await res.json();
+    const order = { verified: 0, pending: 1, failed: 2 };
+    players = Object.entries(data.players || {}).map(([uuid, p]) => ({ uuid, ...p, status: p.status || "pending" }))
+      .sort((a, b) => (b.uuid === CREATOR) - (a.uuid === CREATOR) || order[a.status] - order[b.status]
+        || (a.name || "").localeCompare(b.name || ""));
+    document.getElementById("n-all").textContent = players.length;
+    document.getElementById("n-verified").textContent = count("verified");
+    document.getElementById("n-pending").textContent = count("pending");
+    document.getElementById("n-failed").textContent = count("failed");
+    if (data.updated) {
+      document.getElementById("updated").textContent =
+        "Last checked " + new Date(data.updated).toLocaleString() + " · re-checked every hour.";
+    }
+    render();
+  } catch (e) {
+    document.getElementById("list").innerHTML = `<div class="empty">Couldn't load the player list.</div>`;
+  }
+}
+
+document.getElementById("q").addEventListener("input", render);
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".chip").forEach(x => x.classList.remove("on"));
+  b.classList.add("on");
+  filter = b.dataset.f;
+  render();
+}));
+load();
+</script>
+</body>
+</html>

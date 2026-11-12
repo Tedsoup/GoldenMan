@@ -2,16 +2,13 @@ name: Golden Man verification
 
 on:
   repository_dispatch:
-    types: [register]   # sent by the registration relay when someone clicks Register in game
-  issues:
-    types: [opened]
+    types: [register, quit]   # sent by the registration relay from the mod
   schedule:
     - cron: "17 * * * *"   # re-check everyone hourly
   workflow_dispatch:
 
 permissions:
   contents: write
-  issues: write
 
 concurrency:
   group: golden-man-verify
@@ -19,7 +16,6 @@ concurrency:
 
 jobs:
   verify:
-    if: github.event_name != 'issues' || contains(github.event.issue.body, '### Profile ID')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

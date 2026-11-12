@@ -1,5 +1,7 @@
 # Golden Man — verified players
 
+**Website:** https://tedsoup.github.io/GoldenMan/
+
 This repo is the public list for the **Golden Man** SkyBlock mod.
 
 - `players.json` — every registered player and their status (`verified`, `pending`, `failed`). The mod downloads this to color names: yellow for verified, strikethrough for failed.
