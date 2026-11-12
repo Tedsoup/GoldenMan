@@ -1,6 +1,8 @@
 name: Golden Man verification
 
 on:
+  repository_dispatch:
+    types: [register]   # sent by the registration relay when someone clicks Register in game
   issues:
     types: [opened]
   schedule:
