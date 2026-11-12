@@ -3,7 +3,7 @@
 This repo is the public list for the **Golden Man** SkyBlock mod.
 
 - `players.json` — every registered player and their status (`verified`, `pending`, `failed`). The mod downloads this to color names: yellow for verified, strikethrough for failed.
-- **Registering:** press **G** in game → **Register for verification**. That opens a pre-filled form here; submit it and the checker replies within a minute or two.
+- **Registering:** press **G** in game → **Register for verification**. The mod proves you own the account (through Mojang) and sends the request to the registration relay in `apps-script/`, which starts the checker. Your status updates in game within a few minutes.
 - **Before registering:** turn on every API setting in SkyBlock (SkyBlock Menu → Settings → API Settings).
 
 ## What gets checked (via the Hypixel API, every hour)
