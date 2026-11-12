@@ -1,33 +1,15 @@
-# Golden Man
+# Golden Man — verified players
 
-A client-side Fabric mod for Hypixel SkyBlock (Minecraft 26.2) that enforces the Golden Man challenge.
+This repo is the public list for the **Golden Man** SkyBlock mod.
 
-## Rules
-- **Bazaar:** insta-sell only. No buy orders, no sell offers.
-- **Bazaar buys:** only Booster Cookies, instant buy only.
-- **Auction House:** completely off-limits.
-- **Trading:** only with your co-op members.
-- NPC shops and the Dark Auction are fine.
+- `players.json` — every registered player and their status (`verified`, `pending`, `failed`). The mod downloads this to color names: yellow for verified, strikethrough for failed.
+- **Registering:** press **G** in game → **Register for verification**. That opens a pre-filled form here; submit it and the checker replies within a minute or two.
+- **Before registering:** turn on every API setting in SkyBlock (SkyBlock Menu → Settings → API Settings).
 
-## In-game commands
-| Command | What it does |
-|---|---|
-| `/goldenman` | Status for your current profile |
-| `/goldenman start` → `/goldenman start confirm` | Turn Golden Man on for the profile you're on |
-| `/goldenman stop` → `/goldenman stop confirm` | Turn it off |
-| `/goldenman coop add/remove/list <name>` | Co-op members you're allowed to trade with |
-| `/goldenman rules` | Show the rules |
-| `/goldenman debug` | Show menu titles and clicked buttons in chat (for fixing detection) |
+## What gets checked (via the Hypixel API, every hour)
+1. All API settings are on (otherwise you stay `pending`)
+2. You registered on a fresh profile below SkyBlock level 7
+3. The Auction House was never used (no bids, wins, auctions created or coins spent)
+4. Every co-op member is registered too
 
-The mod learns which profile you're on from Hypixel's `Profile ID:` chat message, which appears when you join SkyBlock.
-Rules only apply to profiles you've started Golden Man on.
-
-## Building (Windows)
-1. Open this folder in IntelliJ IDEA (**File → Open → GoldenMan**). Let it import the Gradle project.
-2. If asked for a JDK, pick **corretto-26** or **openjdk-27** (anything 25 or newer).
-3. Open the **Gradle** panel (elephant icon on the right) → **GoldenMan → Tasks → build → build**.
-4. The mod appears at `build/libs/goldenman-0.1.0.jar`. Copy it into your SkyBlock Enhanced instance's `mods` folder.
-
-## Roadmap
-- v2: `/goldenman start` opens a prefilled GitHub issue; a GitHub Action verifies profiles via the Hypixel API and publishes a list.
-- v3: verified players get a gold shimmer in the tab list; confirmed cheaters get a strikethrough.
+A failed check is permanent. If you think you were marked failed by mistake, email the developer.
