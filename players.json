@@ -4,8 +4,7 @@
       "dev": true,
       "name": "tedsoup",
       "notes": [
-        "registered at SkyBlock level 172 (must be below 7)",
-        "used the Auction House (bids, won, created, gold_spent, highest_bid, total_bought)"
+        "Hypixel API error 403"
       ],
       "profile": "48afb27c-e834-4ccd-80a0-1b896aafb395",
       "registered": "2026-11-12",
@@ -21,5 +20,5 @@
       "status": "pending"
     }
   },
-  "updated": "2026-11-12T23:37:20+00:00"
+  "updated": "2026-11-13T01:03:53+00:00"
 }
